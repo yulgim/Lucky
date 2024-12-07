@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Today's Lucky🍀</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Today's Horoscope</h1>
+    <form id="horoscope-form">
+        <label for="gender">성별:</label>
+        <select id="gender" required>
+            <option value="male">남성</option>
+            <option value="female">여성</option>
+        </select>
+        <label for="birthdate">생년월일:</label>
+        <input type="date" id="birthdate" required>
+        <button type="submit">Get Horoscope</button>
+    </form>
+    <div id="fortune_name"></div>
+    <div id="fortune_detail"></div>
+    <script src="script.js"></script>
+</body>
+</html>
