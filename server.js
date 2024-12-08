@@ -14,10 +14,19 @@ app.post("/api/horoscope", async (req, res) => {
 
     try {
         const browser = await puppeteer.launch({
-            headless: true,
-            args: ["--no-sandbox", "--disable-setuid-sandbox"],
-        });
+          headless: true,
+          args: ["--no-sandbox", 
+                 "--disable-setuid-sandbox", 
+                 "--disable-gpu",
+                 "--disable-dev-shm-usage",
+                 "--single-process",
+                 "--no-zygote"],
+          userDataDir: "/tmp"
+          });
+
         const page = await browser.newPage();
+        await page.setCacheEnabled(false); // 캐시 비활성화
+
 
         // 네이버 운세 페이지 이동
         await page.goto("https://m.search.naver.com/search.naver?sm=mtp_hty.top&where=m&query=오늘의운세");
@@ -42,9 +51,8 @@ app.post("/api/horoscope", async (req, res) => {
 
         // 생년월일 선택 : 1. 생년월일 버튼 클릭
         
-        await page.waitForSelector(".select_pop _trigger"); // 버튼이 로드될 때까지 대기
+        await page.waitForSelector("[.select_pop. _trigger]"); // 버튼이 로드될 때까지 대기
         await page.click(".select_pop _trigger"); // 성별 선택 버튼 클릭
-    
         // 생년 선택
         const [year, month, day] = birthdate.split("-"); // yyyy-mm--dd의 문자열로 저장되어있음
         const yearXPath =  "//a[contains(text(), year)]"
@@ -103,12 +111,14 @@ app.post("/api/horoscope", async (req, res) => {
         res.json({ nameFortune, detailFortune });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Failed to fetch horoscope." });
+        res.status(500).json({ error: error.message || "Failed to fetch horoscope." });
+
     }
 });
 
 // 서버 시작
-const PORT = process.env.PORT || 3000; // Glitch 포트 사용
+const PORT = process.env.PORT; // Glitch 포트 사용
 app.listen(PORT, () => {
+    console.log(`PORT from env: ${process.env.PORT}`); 
     console.log(`Server is running on port ${PORT}`);
 });
