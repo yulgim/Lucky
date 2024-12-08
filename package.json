@@ -16,8 +16,6 @@
   "description": "",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^5.0.0",
-    "path": "^0.12.7",
-    "puppeteer": "^23.10.1"
+    "express": "^5.0.0"
   }
 }

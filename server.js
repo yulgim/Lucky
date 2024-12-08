@@ -1,7 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const puppeteer = require("puppeteer");
-const path = require('path');
 
 
 const app = express();
@@ -24,7 +23,6 @@ app.post("/api/horoscope", async (req, res) => {
                 "--single-process",
                 "--no-zygote",
             ],
-            // executablePath: ,
             userDataDir: "/tmp" // Koyeb의 제한된 환경에서 임시 데이터 저장
           });
 
