@@ -20,8 +20,10 @@ app.post("/api/horoscope", async (req, res) => {
                  "--disable-gpu",
                  "--disable-dev-shm-usage",
                  "--single-process",
-                 "--no-zygote"],
-          userDataDir: "/tmp"
+                 "--no-zygote",
+                ],
+                executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || "/usr/bin/chromium-browser", // Koyeb 환경에서 Chromium 경로 설정
+          userDataDir: "/tmp" // Koyeb의 제한된 환경에서 임시 데이터 저장
           });
 
         const page = await browser.newPage();
@@ -117,7 +119,7 @@ app.post("/api/horoscope", async (req, res) => {
 });
 
 // 서버 시작
-const PORT = process.env.PORT; // Glitch 포트 사용
+const PORT = process.env.PORT || 3000; // Koyeb에서 포트가 다를 수 있으므로 기본값 3000
 app.listen(PORT, () => {
     console.log(`PORT from env: ${process.env.PORT}`); 
     console.log(`Server is running on port ${PORT}`);
