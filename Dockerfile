@@ -8,7 +8,7 @@ WORKDIR /workspace
 COPY . .
 
 # 종속성 설치
-RUN npm install
+RUN chmod -R 777 /workspace
 
 # 서버 실행 (server.js가 서버 엔트리 파일이라고 가정)
 CMD ["node", "server.js"]
