@@ -1,7 +1,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const puppeteer = require("puppeteer");
+const path = require('path');
 
+const chromePath = path.join(__dirname, 'node_modules', 'puppeteer', '.local-chromium', 'linux-131.0.6778.87', 'chrome-linux', 'chrome');
 const app = express();
 
 // Glitch에서 정적 파일 제공
@@ -22,7 +24,7 @@ app.post("/api/horoscope", async (req, res) => {
                  "--single-process",
                  "--no-zygote",
                 ],
-                // executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || "/usr/bin/chromium-browser", // Koyeb 환경에서 Chromium 경로 설정
+                executablePath: chromePath
           userDataDir: "/tmp" // Koyeb의 제한된 환경에서 임시 데이터 저장
           });
 
