@@ -22,7 +22,7 @@ app.post("/api/horoscope", async (req, res) => {
                  "--single-process",
                  "--no-zygote",
                 ],
-                executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || "/usr/bin/chromium-browser", // Koyeb 환경에서 Chromium 경로 설정
+                // executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || "/usr/bin/chromium-browser", // Koyeb 환경에서 Chromium 경로 설정
           userDataDir: "/tmp" // Koyeb의 제한된 환경에서 임시 데이터 저장
           });
 
