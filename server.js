@@ -16,16 +16,16 @@ app.post("/api/horoscope", async (req, res) => {
 
     try {
         const browser = await puppeteer.launch({
-          headless: true,
-          args: ["--no-sandbox", 
-                 "--disable-setuid-sandbox", 
-                 "--disable-gpu",
-                 "--disable-dev-shm-usage",
-                 "--single-process",
-                 "--no-zygote",
-                ],
-                executablePath: chromePath
-          userDataDir: "/tmp" // Koyeb의 제한된 환경에서 임시 데이터 저장
+            headless: true,
+            args: ["--no-sandbox", 
+                "--disable-setuid-sandbox", 
+                "--disable-gpu",
+                "--disable-dev-shm-usage",
+                "--single-process",
+                "--no-zygote",
+            ],
+            executablePath: chromePath,
+            userDataDir: "/tmp" // Koyeb의 제한된 환경에서 임시 데이터 저장
           });
 
         const page = await browser.newPage();
