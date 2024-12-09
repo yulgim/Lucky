@@ -16,15 +16,21 @@ app.post("/api/horoscope", async (req, res) => {
     try {
         const browser = await puppeteer.launch({
             headless: true,
-            args: ["--no-sandbox", 
-                "--disable-setuid-sandbox", 
-                "--disable-gpu",
-                "--disable-dev-shm-usage",
-                "--single-process",
-                "--no-zygote",
+            args: ['--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-background-networking',
+                '--disable-gpu',
+                '--disable-renderer-backgrounding',
+                '--disable-extensions',
+                '--disable-sync',
+                '--single-process',
+                '--no-zygote',
+                '--disable-accelerated-2d-canvas',
             ],
             userDataDir: "/tmp" // Koyeb의 제한된 환경에서 임시 데이터 저장
           });
+          await new Promise((resolve) => setTimeout(resolve, 1000)); // 1초 대기
 
         const page = await browser.newPage();
         await page.setCacheEnabled(false); // 캐시 비활성화
@@ -101,13 +107,13 @@ app.post("/api/horoscope", async (req, res) => {
         // 결과 로딩 대기
         await page.waitForSelector("._resultPanel");
 
-        // 운세 내용 가져오기
+        
         // 운세 명 가져오기
         const nameFortune = await page.$eval("dl.infor._innerPanel dd strong b", (b) => b.innerText.trim());
         // 운세 내용 가져오기
         const detailFortune = await page.$eval("dl.infor._innerPanel dd strong p", (p) => p.innerText.trim());
 
-        
+        await page.close();
         await browser.close();
 
         res.json({ nameFortune, detailFortune });
