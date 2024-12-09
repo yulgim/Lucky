@@ -27,6 +27,8 @@ app.post("/api/horoscope", async (req, res) => {
                 '--single-process',
                 '--no-zygote',
                 '--disable-accelerated-2d-canvas',
+                '--memory-pressure-off',
+                '--renderer-process-limit=1',
             ],
             executablePath: '/usr/bin/chromium-browser',
             userDataDir: "/tmp" // Koyeb의 제한된 환경에서 임시 데이터 저장
